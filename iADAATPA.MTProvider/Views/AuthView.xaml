@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="iADAATPA.MTProvider.Views.AuthView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iADAATPA.MTProvider.Views"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
+             mc:Ignorable="d" 
+             d:DesignHeight="120.327" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type UserControl}">
+            <Style.Triggers>
+                <Trigger Property="ComponentModel:DesignerProperties.IsInDesignMode"
+                         Value="true">
+                    <Setter Property="Background" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="18 22">
+        <StackPanel>
+            <TextBlock Margin="0 0 0 10" TextWrapping="Wrap" Text="This is some general information regarding login and stufff"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="0 0 10 0" Grid.Column="0"/>
+                <Button Grid.Column="1" Content="GO"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
