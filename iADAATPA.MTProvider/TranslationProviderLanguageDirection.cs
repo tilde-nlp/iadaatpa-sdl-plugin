@@ -10,6 +10,17 @@ namespace iADAATPA.MTProvider
 {
     public class TranslationProviderLanguageDirection : ITranslationProviderLanguageDirection
     {
+        private LanguagePair _languageDirection;
+        private API.Client _client;
+        private string src => _languageDirection.SourceCultureName;
+        private string trg => _languageDirection.TargetCultureName;
+
+        public TranslationProviderLanguageDirection(LanguagePair languageDirection, API.Client client)
+        {
+            _languageDirection = languageDirection;
+            _client = client;
+        }
+
         #region ITranslationProviderLanguageDirection Members
 
         public ImportResult[] AddOrUpdateTranslationUnits(TranslationUnit[] translationUnits, int[] previousTranslationHashes, ImportSettings settings)
@@ -43,13 +54,23 @@ namespace iADAATPA.MTProvider
         }
 
         public SearchResults SearchSegment(SearchSettings settings, Segment segment)
-        {
-            throw new NotImplementedException();
-        }
+            => SearchSegments(settings, new Segment[] { segment }).First();
 
         public SearchResults[] SearchSegments(SearchSettings settings, Segment[] segments)
         {
-            throw new NotImplementedException();
+            List<string> sources = segments.Select(x => x.ToPlain()).ToList(); // TODO: handle tags
+            List<string> translations = _client.Translate(sources, src, trg).Result;
+            var allResults = segments.Zip(translations, (sourceSegment, target) =>
+            {
+                var targetSegment = new Segment();
+                targetSegment.Add(target);
+                var tu = new TranslationUnit(sourceSegment.Duplicate(), targetSegment);
+                var res = new SearchResult(tu);
+                var results = new SearchResults { SourceSegment = sourceSegment.Duplicate() };
+                results.Add(res);
+                return results;
+            }).ToArray();
+            return allResults;
         }
 
         public SearchResults[] SearchSegmentsMasked(SearchSettings settings, Segment[] segments, bool[] mask)
