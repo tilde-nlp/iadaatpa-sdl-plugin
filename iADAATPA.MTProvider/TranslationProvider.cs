@@ -48,75 +48,40 @@ namespace iADAATPA.MTProvider
             get { throw new NotImplementedException(); }
         }
 
-        public bool SupportsConcordanceSearch
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool SupportsDocumentSearches
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool SupportsFilters
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool SupportsFuzzySearch
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsConcordanceSearch => false;
+        public bool SupportsDocumentSearches => false;
+        public bool SupportsFilters => false;
+        public bool SupportsFuzzySearch => false;
 
         public bool SupportsLanguageDirection(LanguagePair languageDirection)
         {
             throw new NotImplementedException();
         }
 
-        public bool SupportsMultipleResults
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool SupportsPenalties
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsMultipleResults => false;
+        public bool SupportsPenalties => false;
 
         public bool SupportsPlaceables
         {
             get { throw new NotImplementedException(); }
         }
 
-        public bool SupportsScoring
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsScoring => false;
 
         public bool SupportsSearchForTranslationUnits
         {
             get { throw new NotImplementedException(); }
         }
 
-        public bool SupportsSourceConcordanceSearch
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool SupportsStructureContext
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsSourceConcordanceSearch => false;
+        public bool SupportsStructureContext => false;
 
         public bool SupportsTaggedInput
         {
             get { throw new NotImplementedException(); }
         }
 
-        public bool SupportsTargetConcordanceSearch
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsTargetConcordanceSearch => false;
 
         public bool SupportsTranslation
         {
@@ -128,10 +93,7 @@ namespace iADAATPA.MTProvider
             get { throw new NotImplementedException(); }
         }
 
-        public bool SupportsWordCounts
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsWordCounts => false;
 
         public TranslationMethod TranslationMethod
         {
