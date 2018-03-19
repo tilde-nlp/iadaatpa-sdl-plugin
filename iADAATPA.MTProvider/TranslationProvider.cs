@@ -28,10 +28,7 @@ namespace iADAATPA.MTProvider
             throw new NotImplementedException();
         }
 
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Name => PluginResources.Plugin_Name;
 
         public void RefreshStatusInfo()
         {

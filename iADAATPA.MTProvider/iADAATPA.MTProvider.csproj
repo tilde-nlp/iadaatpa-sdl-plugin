@@ -72,6 +72,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PluginResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PluginResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TranslationProvider.cs" />
     <Compile Include="TranslationProviderFactory.cs" />
     <Compile Include="TranslationProviderWinFormsUI.cs" />
@@ -84,9 +89,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PluginResources.resx">
+    <EmbeddedResource Include="PluginResources.resx">
       <SubType>Designer</SubType>
-    </Content>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PluginResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Content Include="pluginpackage.manifest.xml" />
   </ItemGroup>
   <PropertyGroup>
