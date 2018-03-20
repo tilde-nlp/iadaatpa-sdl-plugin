@@ -61,11 +61,29 @@ namespace iADAATPA.MTProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to iADAATPA Translator plugin for SDL Trados Studio.
+        /// </summary>
+        public static string Plugin_Description {
+            get {
+                return ResourceManager.GetString("Plugin_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to iADAATPA Translator.
         /// </summary>
         public static string Plugin_Name {
             get {
                 return ResourceManager.GetString("Plugin_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to iadaatpa.
+        /// </summary>
+        public static string Plugin_UriSchema {
+            get {
+                return ResourceManager.GetString("Plugin_UriSchema", resourceCulture);
             }
         }
     }

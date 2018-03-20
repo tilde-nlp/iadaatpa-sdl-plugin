@@ -37,25 +37,14 @@ namespace iADAATPA.MTProvider
             throw new NotImplementedException();
         }
 
-        public bool SupportsEditing
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool SupportsEditing => true;
 
         public bool SupportsTranslationProviderUri(Uri translationProviderUri)
-        {
-            throw new NotImplementedException();
-        }
+            => string.Equals(translationProviderUri.Scheme, PluginResources.Plugin_UriSchema, StringComparison.InvariantCultureIgnoreCase); // TODO: check what is actually passed into here
 
-        public string TypeDescription
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string TypeDescription => PluginResources.Plugin_Description;
 
-        public string TypeName
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string TypeName => PluginResources.Plugin_Name + "...";
 
         #endregion
     }

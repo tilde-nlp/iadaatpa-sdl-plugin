@@ -24,7 +24,8 @@ namespace iADAATPA.MTProvider
         public TranslationProviderInfo GetTranslationProviderInfo(Uri translationProviderUri, string translationProviderState)
             => new TranslationProviderInfo { Name = PluginResources.Plugin_Name, TranslationMethod = TranslationMethod.MachineTranslation };
 
-        public bool SupportsTranslationProviderUri(Uri translationProviderUri) => translationProviderUri.ToString().StartsWith("iadaatpa");
+        public bool SupportsTranslationProviderUri(Uri translationProviderUri)
+            => translationProviderUri.ToString().StartsWith(PluginResources.Plugin_UriSchema); // TODO: check what is passed here
 
         #endregion
     }
