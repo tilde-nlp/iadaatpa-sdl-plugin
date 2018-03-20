@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iADAATPA.MTProvider.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,9 @@ namespace iADAATPA.MTProvider.Views
     /// <summary>
     /// Interaction logic for AuthView.xaml
     /// </summary>
-    public partial class AuthView : UserControl
+    public partial class AuthWindow : ClosableWindow
     {
-        public AuthView()
+        public AuthWindow(ClosableViewModel vm) : base(vm)
         {
             InitializeComponent();
         }

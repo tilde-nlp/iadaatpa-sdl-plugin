@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace iADAATPA.MTProvider.ViewModels
 {
-    public class AuthViewModel : INotifyPropertyChanged
+    public class AuthViewModel : ClosableViewModel
     {
         private string _authToken;
         private ICommand _goCommand;
@@ -25,14 +25,13 @@ namespace iADAATPA.MTProvider.ViewModels
                 if(_authToken != value)
                 {
                     _authToken = value;
-                    this.Notify(PropertyChanged);
+                    this.Notify();
                 }
             }
         }
 
         public ICommand GoCommand => _goCommand;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler GoExecuted;
     }
 }

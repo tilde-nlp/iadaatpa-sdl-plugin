@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Windows;
 using System.Windows.Forms;
+using iADAATPA.MTProvider.ViewModels;
+using iADAATPA.MTProvider.Views;
 using Sdl.LanguagePlatform.Core;
 using Sdl.LanguagePlatform.TranslationMemory;
 using Sdl.LanguagePlatform.TranslationMemoryApi;
@@ -19,7 +23,29 @@ namespace iADAATPA.MTProvider
 
         public ITranslationProvider[] Browse(IWin32Window owner, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
         {
-            throw new NotImplementedException();
+            var authViewModel = new AuthViewModel();
+            var authView = new AuthWindow(authViewModel);
+            bool success = authView.ShowDialog() == true;
+            if (success)
+            {
+                string authToken = authViewModel.AuthToken;
+                //var credentials = credentialStore.GetCredential(new Uri(PluginResources.Plugin_UriSchema));
+                credentialStore.AddCredential(new Uri(PluginResources.Plugin_UriSchema), new TranslationProviderCredential(authToken, true));
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+            //{
+            //    Title = $"{PluginResources.Plugin_Name} v{Assembly.GetExecutingAssembly().GetName().Version}",
+            //    Height = 120,
+            //    Width = 300,
+            //    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+            //    ResizeMode = ResizeMode.NoResize
+            //};
+            // TODO: set icon
+            return null;
+            
         }
 
         public bool Edit(IWin32Window owner, ITranslationProvider translationProvider, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
