@@ -29,8 +29,9 @@ namespace iADAATPA.MTProvider
             if (success)
             {
                 string authToken = authViewModel.AuthToken;
+                var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
                 //var credentials = credentialStore.GetCredential(new Uri(PluginResources.Plugin_UriSchema));
-                credentialStore.AddCredential(new Uri(PluginResources.Plugin_UriSchema), new TranslationProviderCredential(authToken, true));
+                credentialStore.AddCredential(builder.Uri, new TranslationProviderCredential(authToken, true));
             }
             else
             {
