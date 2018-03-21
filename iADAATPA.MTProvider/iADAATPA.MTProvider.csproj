@@ -85,6 +85,7 @@
     <Compile Include="API\Client.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtensions.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
+    <Compile Include="Helpers\DialogCloser.cs" />
     <Compile Include="Model\TranslationItem.cs" />
     <Compile Include="Model\TranslationRequestItem.cs" />
     <Compile Include="Model\TranslationResponseItem.cs" />

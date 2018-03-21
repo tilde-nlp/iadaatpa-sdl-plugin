@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace iADAATPA.MTProvider.ViewModels
@@ -28,7 +29,7 @@ namespace iADAATPA.MTProvider.ViewModels
             set { _dialogResult = value; Notify(); }
         }
 
-        public void Notify() => this.Notify(PropertyChanged);
+        public void Notify([CallerMemberName] string propertyName = "") => this.Notify(PropertyChanged, propertyName);
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -16,7 +16,11 @@ namespace iADAATPA.MTProvider.ViewModels
         private ICommand _goCommand;
         public AuthViewModel()
         {
-            _goCommand = new DelegateCommand(() => GoExecuted?.Invoke(this, new EventArgs()));
+            _goCommand = new DelegateCommand(() =>
+            {
+                DialogResult = true;
+                OnClosingRequest();
+            });
         }
         public string AuthToken {
             get => _authToken;

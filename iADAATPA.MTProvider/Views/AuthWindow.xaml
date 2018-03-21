@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:iADAATPA.MTProvider.Views"
+             xmlns:helpers="clr-namespace:iADAATPA.MTProvider.Helpers"
+             helpers:DialogCloser.DialogResult="{Binding DialogResult}"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
-             mc:Ignorable="d" Height="140.377" Width="330.096" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
+             mc:Ignorable="d" Height="160.877" Width="330.096" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
     <Grid Margin="18 22">
         <StackPanel>
             <TextBlock Margin="0 0 0 10" TextWrapping="Wrap" Text="This is some general information regarding login and stufff"/>
@@ -14,8 +16,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="60"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Margin="0 0 10 0" Grid.Column="0"/>
-                <Button Grid.Column="1" Content="GO"/>
+                <TextBox Margin="0 0 10 0" Grid.Column="0" Text="{Binding AuthToken,Mode=TwoWay}"/>
+                <Button Grid.Column="1" Content="GO" Command="{Binding GoCommand}"/>
             </Grid>
         </StackPanel>
     </Grid>
