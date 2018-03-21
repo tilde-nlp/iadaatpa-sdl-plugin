@@ -61,6 +61,15 @@ namespace iADAATPA.MTProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://www.iadaatpa.eu/api/.
+        /// </summary>
+        public static string iADAATPA_API {
+            get {
+                return ResourceManager.GetString("iADAATPA_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to iADAATPA Translator plugin for SDL Trados Studio.
         /// </summary>
         public static string Plugin_Description {

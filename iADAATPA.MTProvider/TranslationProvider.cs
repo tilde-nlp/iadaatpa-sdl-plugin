@@ -11,11 +11,16 @@ namespace iADAATPA.MTProvider
 {
     public class TranslationProvider : ITranslationProvider
     {
-        #region ITranslationProvider Members
+        API.Client _client;
+        public TranslationProvider(API.Client client)
+        {
+            _client = client;
+        }
 
+        #region ITranslationProvider Members
         public ITranslationProviderLanguageDirection GetLanguageDirection(LanguagePair languageDirection)
         {
-            throw new NotImplementedException();
+            return new TranslationProviderLanguageDirection(languageDirection, _client);
         }
 
         public bool IsReadOnly

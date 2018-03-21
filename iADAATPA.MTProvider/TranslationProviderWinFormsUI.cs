@@ -26,27 +26,15 @@ namespace iADAATPA.MTProvider
             var authViewModel = new AuthViewModel();
             var authView = new AuthWindow(authViewModel);
             bool success = authView.ShowDialog() == true;
-            if (success)
-            {
-                string authToken = authViewModel.AuthToken;
-                var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
-                //var credentials = credentialStore.GetCredential(new Uri(PluginResources.Plugin_UriSchema));
-                credentialStore.AddCredential(builder.Uri, new TranslationProviderCredential(authToken, true));
-            }
-            else
+            if (!success)
             {
                 throw new NotImplementedException();
             }
-            //{
-            //    Title = $"{PluginResources.Plugin_Name} v{Assembly.GetExecutingAssembly().GetName().Version}",
-            //    Height = 120,
-            //    Width = 300,
-            //    WindowStartupLocation = WindowStartupLocation.CenterScreen,
-            //    ResizeMode = ResizeMode.NoResize
-            //};
-            // TODO: set icon
-            return null;
-            
+            string authToken = authViewModel.AuthToken;
+            var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
+            credentialStore.AddCredential(builder.Uri, new TranslationProviderCredential(authToken, true));
+            var factory = new TranslationProviderFactory();
+            return new ITranslationProvider[] { factory.CreateTranslationProvider(builder.Uri, null, credentialStore) };
         }
 
         public bool Edit(IWin32Window owner, ITranslationProvider translationProvider, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
