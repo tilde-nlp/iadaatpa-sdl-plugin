@@ -21,7 +21,7 @@ namespace iADAATPA.MTProvider
             TranslationProviderCredential authCredential = credentialStore.GetCredential(translationProviderUri);
             string authToken = authCredential.Credential;
             var client = new API.Client(PluginResources.iADAATPA_API, authToken);
-            return new TranslationProvider(client);
+            return new TranslationProvider(translationProviderUri, client);
         }
 
         public TranslationProviderInfo GetTranslationProviderInfo(Uri translationProviderUri, string translationProviderState)
