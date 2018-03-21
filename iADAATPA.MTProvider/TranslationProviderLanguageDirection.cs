@@ -15,52 +15,48 @@ namespace iADAATPA.MTProvider
         private string src => _languageDirection.SourceCultureName;
         private string trg => _languageDirection.TargetCultureName;
 
-        public TranslationProviderLanguageDirection(LanguagePair languageDirection, API.Client client)
+        public TranslationProviderLanguageDirection(LanguagePair languageDirection, API.Client client, ITranslationProvider parent)
         {
             _languageDirection = languageDirection;
             _client = client;
+            TranslationProvider = parent; // It isn't (and probably shouldn't be) used internally. We hold on to the provider just because the API asks us to.
         }
+
+        private ImportResult discardedResult => new ImportResult(Sdl.LanguagePlatform.TranslationMemory.Action.Discard);
+        private ImportResult[] discardedResults(TranslationUnit[] translationUnits)
+            => translationUnits.Select(x => discardedResult).ToArray();
 
         #region ITranslationProviderLanguageDirection Members
 
         public ImportResult[] AddOrUpdateTranslationUnits(TranslationUnit[] translationUnits, int[] previousTranslationHashes, ImportSettings settings)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResults(translationUnits); // The method is not supported;
 
         public ImportResult[] AddOrUpdateTranslationUnitsMasked(TranslationUnit[] translationUnits, int[] previousTranslationHashes, ImportSettings settings, bool[] mask)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResults(translationUnits); // The method is not supported;
 
         public ImportResult AddTranslationUnit(TranslationUnit translationUnit, ImportSettings settings)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResult; // The method is not supported;
 
         public ImportResult[] AddTranslationUnits(TranslationUnit[] translationUnits, ImportSettings settings)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResults(translationUnits); // The method is not supported;
 
         public ImportResult[] AddTranslationUnitsMasked(TranslationUnit[] translationUnits, ImportSettings settings, bool[] mask)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResults(translationUnits); // The method is not supported;
 
-        public bool CanReverseLanguageDirection
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool CanReverseLanguageDirection => false;
 
         public SearchResults SearchSegment(SearchSettings settings, Segment segment)
             => SearchSegments(settings, new Segment[] { segment }).First();
 
         public SearchResults[] SearchSegments(SearchSettings settings, Segment[] segments)
+            => SearchSegmentsMasked(settings, segments, null);
+
+        public SearchResults[] SearchSegmentsMasked(SearchSettings settings, Segment[] segments, bool[] mask)
         {
+            IEnumerable<Segment> toTranslate = mask != null ? segments.Where((x, i) => mask[i]) : segments;
             List<string> sources = segments.Select(x => x.ToPlain()).ToList(); // TODO: handle tags
             List<string> translations = _client.Translate(sources, src, trg).Result;
-            var allResults = segments.Zip(translations, (sourceSegment, target) =>
+            IEnumerable<SearchResults> nonMaskedResults = segments.Zip(translations, (sourceSegment, target) =>
             {
                 var targetSegment = new Segment();
                 targetSegment.Add(target);
@@ -69,59 +65,56 @@ namespace iADAATPA.MTProvider
                 var results = new SearchResults { SourceSegment = sourceSegment.Duplicate() };
                 results.Add(res);
                 return results;
-            }).ToArray();
-            return allResults;
-        }
+            });
 
-        public SearchResults[] SearchSegmentsMasked(SearchSettings settings, Segment[] segments, bool[] mask)
-        {
-            throw new NotImplementedException();
+            IEnumerable<SearchResults> maskedResults()
+            {
+                var enumerator = nonMaskedResults.GetEnumerator();
+                foreach (var item in segments.Select((value, i) => new { i, value }))
+                {
+                    if (mask == null || mask[item.i])
+                    {
+                        yield return enumerator.Current;
+                        enumerator.MoveNext();
+                    }
+                    yield return null;
+                }
+            }
+            return maskedResults().ToArray();
         }
 
         public SearchResults SearchText(SearchSettings settings, string segment)
         {
-            throw new NotImplementedException();
+            Segment toTranslate = new Segment();
+            toTranslate.Add(segment);
+            return SearchSegment(settings, toTranslate);
         }
 
         public SearchResults SearchTranslationUnit(SearchSettings settings, TranslationUnit translationUnit)
-        {
-            throw new NotImplementedException();
-        }
+            => SearchTranslationUnits(settings, new TranslationUnit[] { translationUnit }).First();
 
         public SearchResults[] SearchTranslationUnits(SearchSettings settings, TranslationUnit[] translationUnits)
-        {
-            throw new NotImplementedException();
-        }
+            => SearchTranslationUnitsMasked(settings, translationUnits, null);
 
         public SearchResults[] SearchTranslationUnitsMasked(SearchSettings settings, TranslationUnit[] translationUnits, bool[] mask)
-        {
-            throw new NotImplementedException();
-        }
+            => SearchSegmentsMasked(settings, translationUnits.Select(x => x.SourceSegment).ToArray(), mask);
+            // TODO: maybe it's required that we preserve the target segments or something
 
-        public System.Globalization.CultureInfo SourceLanguage
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public System.Globalization.CultureInfo SourceLanguage => _languageDirection.SourceCulture;
 
-        public System.Globalization.CultureInfo TargetLanguage
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public System.Globalization.CultureInfo TargetLanguage => _languageDirection.TargetCulture;
 
-        public ITranslationProvider TranslationProvider
-        {
-            get { throw new NotImplementedException(); }
-        }
+        /// <summary>
+        /// The property is here simply because <see cref="ITranslationProviderLanguageDirection"/> asks for it.
+        /// NOTE: It's probably best to not use it to not break encapsulation and end up with an entangled mess of a code.
+        /// </summary>
+        public ITranslationProvider TranslationProvider { get; private set; }
 
         public ImportResult UpdateTranslationUnit(TranslationUnit translationUnit)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResult; // The method is not supported;
 
         public ImportResult[] UpdateTranslationUnits(TranslationUnit[] translationUnits)
-        {
-            throw new NotImplementedException();
-        }
+            => discardedResults(translationUnits); // The method is not supported;
 
         #endregion
     }

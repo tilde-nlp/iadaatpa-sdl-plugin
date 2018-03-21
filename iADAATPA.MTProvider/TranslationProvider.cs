@@ -21,7 +21,7 @@ namespace iADAATPA.MTProvider
         #region ITranslationProvider Members
         public ITranslationProviderLanguageDirection GetLanguageDirection(LanguagePair languageDirection)
         {
-            return new TranslationProviderLanguageDirection(languageDirection, _client);
+            return new TranslationProviderLanguageDirection(languageDirection, _client, this);
         }
 
         public bool IsReadOnly => false; // TODO: don't know about this
