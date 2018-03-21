@@ -19,38 +19,37 @@ namespace iADAATPA.MTProvider
         Description = "Translation_Provider_Plug_inWinFormsUI")]
     public class TranslationProviderWinFormsUI : ITranslationProviderWinFormsUI
     {
+        private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
+
         #region ITranslationProviderWinFormsUI Members
 
         public ITranslationProvider[] Browse(IWin32Window owner, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
+        {
+            var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
+            var factory = new TranslationProviderFactory();
+            return new ITranslationProvider[] { factory.CreateTranslationProvider(providerUri, null, credentialStore) };
+        }
+
+        public bool Edit(IWin32Window owner, ITranslationProvider translationProvider, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
+            => GetCredentialsFromUser(owner, providerUri, null, credentialStore);
+
+        public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
         {
             var authViewModel = new AuthViewModel();
             var authView = new AuthWindow(authViewModel);
             bool success = authView.ShowDialog() == true;
             if (!success)
             {
-                throw new NotImplementedException();
+                return false;
             }
             string authToken = authViewModel.AuthToken;
             var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
             credentialStore.AddCredential(builder.Uri, new TranslationProviderCredential(authToken, true));
-            var factory = new TranslationProviderFactory();
-            return new ITranslationProvider[] { factory.CreateTranslationProvider(builder.Uri, null, credentialStore) };
-        }
-
-        public bool Edit(IWin32Window owner, ITranslationProvider translationProvider, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
-        {
-            throw new NotImplementedException();
+            return true;
         }
 
         public TranslationProviderDisplayInfo GetDisplayInfo(Uri translationProviderUri, string translationProviderState)
-        {
-            throw new NotImplementedException();
-        }
+            => new TranslationProviderDisplayInfo() { Name = PluginResources.Plugin_Name, TooltipText = PluginResources.Plugin_Description }; // TODO: provide icons
 
         public bool SupportsEditing => true;
 

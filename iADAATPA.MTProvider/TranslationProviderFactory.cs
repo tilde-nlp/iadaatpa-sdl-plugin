@@ -20,6 +20,10 @@ namespace iADAATPA.MTProvider
         {
             TranslationProviderCredential authCredential = credentialStore.GetCredential(translationProviderUri);
             string authToken = authCredential.Credential;
+            if (string.IsNullOrEmpty(authToken))
+            {
+                throw new TranslationProviderAuthenticationException();
+            }
             var client = new API.Client(PluginResources.iADAATPA_API, authToken);
             return new TranslationProvider(translationProviderUri, client);
         }
