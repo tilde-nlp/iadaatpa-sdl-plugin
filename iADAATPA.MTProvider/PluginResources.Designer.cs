@@ -61,7 +61,7 @@ namespace iADAATPA.MTProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://www.iadaatpa.eu/api/.
+        ///   Looks up a localized string similar to https://private-anon-c698772d47-iadaatpadev.apiary-mock.com/api/.
         /// </summary>
         public static string iADAATPA_API {
             get {
