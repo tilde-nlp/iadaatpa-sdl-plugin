@@ -16,6 +16,12 @@ namespace iADAATPA.MTProvider.Model
         public object Error { get; set; }
 
         [JsonProperty("data")]
-        public Dictionary<string, TranslationItem> Data { get; set; }
+        public SegmentContainer Data { get; set; }
+    }
+
+    public class SegmentContainer
+    {
+        [JsonProperty("segments")]
+        public Dictionary<string, TranslationItem> Segments { get; set; }
     }
 }

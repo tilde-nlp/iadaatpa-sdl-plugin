@@ -32,7 +32,7 @@ namespace iADAATPA.MTProvider.API
             res.EnsureSuccessStatusCode();
 
             var respItem = await res.Content.ReadAsAsync<TranslationResponseItem>().ConfigureAwait(false);
-            var translations = respItem.Data.ToList()
+            var translations = respItem.Data.Segments.ToList()
                 .OrderBy(x => int.Parse(x.Key))
                 .Select(x => x.Value.Translation)
                 .ToList();
