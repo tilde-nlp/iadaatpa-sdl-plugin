@@ -35,7 +35,5 @@ namespace iADAATPA.MTProvider.ViewModels
         }
 
         public ICommand GoCommand => _goCommand;
-
-        public event EventHandler GoExecuted;
     }
 }
