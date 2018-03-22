@@ -54,7 +54,7 @@ namespace iADAATPA.MTProvider
         public SearchResults[] SearchSegmentsMasked(SearchSettings settings, Segment[] segments, bool[] mask)
         {
             IEnumerable<Segment> toTranslate = mask != null ? segments.Where((x, i) => mask[i]) : segments;
-            List<string> sources = segments.Select(x => x.ToPlain()).ToList(); // TODO: handle tags
+            List<string> sources = toTranslate.Select(x => x.ToPlain()).ToList(); // TODO: handle tags
             List<string> translations = _client.Translate(sources, src, trg).Result;
             IEnumerable<SearchResults> nonMaskedResults = segments.Zip(translations, (sourceSegment, target) =>
             {
