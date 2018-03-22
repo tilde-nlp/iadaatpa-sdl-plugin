@@ -5,4 +5,8 @@
   <Description>iADAATPA Translator plugin for SDL Trados Studio</Description>
   <Author></Author>
   <RequiredProduct name="SDLTradosStudio" minversion="14.0" />
+  <Include>
+    <File>System.Net.Http.Formatting.dll</File>
+    <File>Newtonsoft.Json.dll</File>
+  </Include>
 </PluginPackage>
