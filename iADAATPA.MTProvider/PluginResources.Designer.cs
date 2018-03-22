@@ -97,11 +97,20 @@ namespace iADAATPA.MTProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter your authentication token..
+        ///   Looks up a localized string similar to Please enter your Consumer API Token..
         /// </summary>
         public static string UI_AuthText {
             get {
                 return ResourceManager.GetString("UI_AuthText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to iADAATPA Authentication.
+        /// </summary>
+        public static string UI_AuthTitle {
+            get {
+                return ResourceManager.GetString("UI_AuthTitle", resourceCulture);
             }
         }
         

@@ -8,6 +8,7 @@
              xmlns:helpers="clr-namespace:iADAATPA.MTProvider.Helpers"
              helpers:DialogCloser.DialogResult="{Binding DialogResult}"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
+             Title="{Binding Source={x:Static mt:PluginResources.UI_AuthTitle}}"
              mc:Ignorable="d" Height="137.877" Width="330.096" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
     <Grid Margin="18 22">
         <StackPanel>

@@ -130,7 +130,10 @@
     <value>iadaatpa</value>
   </data>
   <data name="UI_AuthText" xml:space="preserve">
-    <value>Please enter your authentication token.</value>
+    <value>Please enter your Consumer API Token.</value>
+  </data>
+  <data name="UI_AuthTitle" xml:space="preserve">
+    <value>iADAATPA Authentication</value>
   </data>
   <data name="UI_Go" xml:space="preserve">
     <value>GO</value>
