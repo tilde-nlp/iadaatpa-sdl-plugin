@@ -39,7 +39,7 @@ namespace iADAATPA.MTProvider
         public bool SupportsPenalties => false;
         public bool SupportsPlaceables => false; // TODO: don't know what these are so let's leave it at false for now
         public bool SupportsScoring => false;
-        public bool SupportsSearchForTranslationUnits => false; // TODO: think this should be true, but lets leavi it for now to see what happens
+        public bool SupportsSearchForTranslationUnits => true; // TODO: think this should be true, but lets leavi it for now to see what happens
         public bool SupportsSourceConcordanceSearch => false;
         public bool SupportsStructureContext => false;
         public bool SupportsTaggedInput => false; // TODO: fix this
