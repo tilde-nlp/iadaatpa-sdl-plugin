@@ -11,11 +11,11 @@ namespace iADAATPA.MTProvider
     public class TranslationProviderLanguageDirection : ITranslationProviderLanguageDirection
     {
         private LanguagePair _languageDirection;
-        private API.Client _client;
+        private API.IClient _client;
         private string src => _languageDirection.SourceCultureName;
         private string trg => _languageDirection.TargetCultureName;
 
-        public TranslationProviderLanguageDirection(LanguagePair languageDirection, API.Client client, ITranslationProvider parent)
+        public TranslationProviderLanguageDirection(LanguagePair languageDirection, API.IClient client, ITranslationProvider parent)
         {
             _languageDirection = languageDirection;
             _client = client;

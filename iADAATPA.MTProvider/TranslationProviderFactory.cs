@@ -24,7 +24,8 @@ namespace iADAATPA.MTProvider
             {
                 throw new TranslationProviderAuthenticationException();
             }
-            var client = new API.Client(PluginResources.iADAATPA_API, authToken);
+            //var client = new API.Client(PluginResources.iADAATPA_API, authToken);
+            var client = new API.MockClient();
             return new TranslationProvider(translationProviderUri, client);
         }
 

@@ -8,7 +8,7 @@ using iADAATPA.MTProvider.Model;
 
 namespace iADAATPA.MTProvider.API
 {
-    public class Client : HttpClient
+    public class Client : HttpClient, IClient
     {
         private string _authToken;
         public Client(string baseAddress, string authToken)

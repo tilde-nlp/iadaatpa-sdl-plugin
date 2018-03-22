@@ -11,8 +11,8 @@ namespace iADAATPA.MTProvider
 {
     public class TranslationProvider : ITranslationProvider
     {
-        API.Client _client;
-        public TranslationProvider(Uri providerUri, API.Client client)
+        API.IClient _client;
+        public TranslationProvider(Uri providerUri, API.IClient client)
         {
             _client = client;
             Uri = providerUri;
