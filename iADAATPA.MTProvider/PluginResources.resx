@@ -129,4 +129,10 @@
   <data name="Plugin_UriSchema" xml:space="preserve">
     <value>iadaatpa</value>
   </data>
+  <data name="UI_AuthText" xml:space="preserve">
+    <value>Please enter your authentication token.</value>
+  </data>
+  <data name="UI_Go" xml:space="preserve">
+    <value>GO</value>
+  </data>
 </root>

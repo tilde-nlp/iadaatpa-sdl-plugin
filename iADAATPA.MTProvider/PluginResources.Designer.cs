@@ -95,5 +95,23 @@ namespace iADAATPA.MTProvider {
                 return ResourceManager.GetString("Plugin_UriSchema", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your authentication token..
+        /// </summary>
+        public static string UI_AuthText {
+            get {
+                return ResourceManager.GetString("UI_AuthText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GO.
+        /// </summary>
+        public static string UI_Go {
+            get {
+                return ResourceManager.GetString("UI_Go", resourceCulture);
+            }
+        }
     }
 }
