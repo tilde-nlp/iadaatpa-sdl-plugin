@@ -33,7 +33,7 @@ namespace iADAATPA.MTProvider
             => new TranslationProviderInfo { Name = PluginResources.Plugin_Name, TranslationMethod = TranslationMethod.MachineTranslation };
 
         public bool SupportsTranslationProviderUri(Uri translationProviderUri)
-            => translationProviderUri.ToString().StartsWith(PluginResources.Plugin_UriSchema); // TODO: check what is passed here
+            => translationProviderUri.Scheme.Equals(PluginResources.Plugin_UriSchema); // TODO: check what is passed here
 
         #endregion
     }
