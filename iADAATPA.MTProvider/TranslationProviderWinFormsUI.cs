@@ -14,9 +14,9 @@ using Sdl.LanguagePlatform.TranslationMemoryApi;
 namespace iADAATPA.MTProvider
 {
     [TranslationProviderWinFormsUi(
-        Id = "Translation_Provider_Plug_inWinFormsUI",
-        Name = "Translation_Provider_Plug_inWinFormsUI",
-        Description = "Translation_Provider_Plug_inWinFormsUI")]
+        Id = "iADAATPA_Translation_Provider_Plugin_WinFormsUI",
+        Name = "iADAATPA Translator UI",
+        Description = "User interface for the iADAATPA Translator plugin")]
     public class TranslationProviderWinFormsUI : ITranslationProviderWinFormsUI
     {
         private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
