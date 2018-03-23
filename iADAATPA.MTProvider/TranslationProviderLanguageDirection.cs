@@ -56,24 +56,27 @@ namespace iADAATPA.MTProvider
             IEnumerable<Segment> toTranslate = mask != null ? segments.Where((x, i) => mask[i]) : segments;
             List<string> sources = toTranslate.Select(x => x.ToPlain()).ToList(); // TODO: handle tags
             List<string> translations = _client.Translate(sources, src, trg).Result;
-            IEnumerable<SearchResults> nonMaskedResults = segments.Zip(translations, (sourceSegment, target) =>
-            {
-                var targetSegment = new Segment();
-                targetSegment.Add(target);
-                var tu = new TranslationUnit(sourceSegment.Duplicate(), targetSegment);
-                tu.Origin = TranslationUnitOrigin.MachineTranslation;
-                tu.ResourceId = new PersistentObjectToken(tu.GetHashCode(), Guid.Empty); // TODO: is this needed?
-                var res = new SearchResult(tu)
-                {
-                    TranslationProposal = tu.Duplicate(),
-                    ScoringResult = new ScoringResult() { BaseScore = 85 } // Although we do not support scoring, returning some kind of a score is mandatory, else Trados freezes
-                };
-                var results = new SearchResults { SourceSegment = sourceSegment.Duplicate() };
-                results.Add(res);
-                return results;
-            });
 
-            IEnumerable<SearchResults> maskedResults()
+            IEnumerable<SearchResults> nonMaskedResults = segments.Zip(translations,
+                // Converting a translation string to SearchResults is quite involved
+                (Segment sourceSegment, string translation) => {
+                    var targetSegment = new Segment();
+                    targetSegment.Add(translation);
+
+                    var tu = new TranslationUnit(sourceSegment.Duplicate(), targetSegment);
+                    tu.Origin = TranslationUnitOrigin.MachineTranslation;
+                    tu.ResourceId = new PersistentObjectToken(tu.GetHashCode(), Guid.Empty); // TODO: is this needed?
+
+                    var res = new SearchResult(tu) {
+                        TranslationProposal = tu.Duplicate(),
+                        ScoringResult = new ScoringResult() { BaseScore = 85 } // Although we do not support scoring, returning some kind of a score is mandatory, else Trados freezes
+                    };
+                    var results = new SearchResults { SourceSegment = sourceSegment.Duplicate() };
+                    results.Add(res);
+                    return results;
+                });
+
+            IEnumerable<SearchResults> allResults()
             {
                 var enumerator = nonMaskedResults.GetEnumerator();
                 foreach (var item in segments.Select((value, i) => new { i, value }))
@@ -87,7 +90,7 @@ namespace iADAATPA.MTProvider
                     yield return null;
                 }
             }
-            var resArray = maskedResults().ToArray();
+            var resArray = allResults().ToArray();
             return resArray;
         }
 
