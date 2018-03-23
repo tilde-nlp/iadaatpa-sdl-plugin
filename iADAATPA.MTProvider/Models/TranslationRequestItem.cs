@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace iADAATPA.MTProvider.Model
+namespace iADAATPA.MTProvider.Models
 {
     class TranslationRequestItem
     {

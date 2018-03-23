@@ -92,9 +92,9 @@
     <Compile Include="Extensions\INotifyPropertyChangedExtensions.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
-    <Compile Include="Model\TranslationItem.cs" />
-    <Compile Include="Model\TranslationRequestItem.cs" />
-    <Compile Include="Model\TranslationResponseItem.cs" />
+    <Compile Include="Models\TranslationItem.cs" />
+    <Compile Include="Models\TranslationRequestItem.cs" />
+    <Compile Include="Models\TranslationResponseItem.cs" />
     <Compile Include="PluginResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

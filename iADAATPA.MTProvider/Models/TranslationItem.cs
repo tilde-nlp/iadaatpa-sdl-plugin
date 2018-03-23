@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iADAATPA.MTProvider.Model
+namespace iADAATPA.MTProvider.Models
 {
     public class TranslationItem
     {
