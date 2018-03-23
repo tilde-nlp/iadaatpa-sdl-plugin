@@ -61,7 +61,13 @@ namespace iADAATPA.MTProvider
                 var targetSegment = new Segment();
                 targetSegment.Add(target);
                 var tu = new TranslationUnit(sourceSegment.Duplicate(), targetSegment);
-                var res = new SearchResult(tu);
+                tu.Origin = TranslationUnitOrigin.MachineTranslation;
+                tu.ResourceId = new PersistentObjectToken(tu.GetHashCode(), Guid.Empty); // TODO: is this needed?
+                var res = new SearchResult(tu)
+                {
+                    TranslationProposal = tu.Duplicate(),
+                    ScoringResult = new ScoringResult() { BaseScore = 85 } // Although we do not support scoring, returning some kind of a score is mandatory, else Trados freezes
+                };
                 var results = new SearchResults { SourceSegment = sourceSegment.Duplicate() };
                 results.Add(res);
                 return results;
