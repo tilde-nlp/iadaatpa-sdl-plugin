@@ -36,6 +36,9 @@ namespace iADAATPA.MTProvider
         public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
         {
             var authViewModel = new AuthViewModel();
+            var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
+            string existingToken = credentialStore.GetCredential(builder.Uri)?.Credential;
+            authViewModel.AuthToken = existingToken;
             var authView = new AuthWindow(authViewModel);
             bool success = authView.ShowDialog() == true;
             if (!success)
@@ -43,7 +46,6 @@ namespace iADAATPA.MTProvider
                 return false;
             }
             string authToken = authViewModel.AuthToken;
-            var builder = new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema);
             credentialStore.AddCredential(builder.Uri, new TranslationProviderCredential(authToken, true));
             return true;
         }
