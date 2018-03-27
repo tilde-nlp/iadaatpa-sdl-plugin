@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using iADAATPA.MTProvider;
+using Sdl.LanguagePlatform.TranslationMemoryApi;
+using TestClient.ViewModels;
 
 namespace TestClient
 {
@@ -23,6 +26,13 @@ namespace TestClient
         public MainWindow()
         {
             InitializeComponent();
+            var store = new TranslationProviderCredentialStore();
+            Uri uri = new TranslationProviderUriBuilder("iadaatpa").Uri;
+            store.AddCredential(uri, new TranslationProviderCredential("validToken", true));
+            var factory = new TranslationProviderFactory();
+            var provider = factory.CreateTranslationProvider(uri, null, store);
+            var vm = new MainViewModel(provider);
+            DataContext = vm;
         }
     }
 }

@@ -13,10 +13,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox Margin="10 0" Grid.Column="0"/>
-            <TextBox Margin="10 0" Grid.Column="1"/>
+            <TextBox Margin="10 0" Grid.Column="0" Text="{Binding Source}" />
+            <TextBox Margin="10 0" Grid.Column="1" Text="{Binding Translation}"/>
         </Grid>
-        <Button Content="Translate" Width="60"/>
+        <Button Content="Translate" Width="60" Command="{Binding TranslateCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
