@@ -21,7 +21,7 @@ namespace iADAATPA.MTProvider.API
             Dictionary<string, string> segments =
                 sources
                 .Select((value, index) => new { value, index })
-                .ToDictionary(x => x.index.ToString(), x => x.value);
+                .ToDictionary(x => "s" + x.index.ToString(), x => x.value);
 
             var res = await this.PostAsJsonAsync("translate",
                 new TranslationRequestItem {
@@ -33,7 +33,7 @@ namespace iADAATPA.MTProvider.API
 
             var respItem = await res.Content.ReadAsAsync<TranslationResponseItem>().ConfigureAwait(false);
             var translations = respItem.Data.Segments.ToList()
-                .OrderBy(x => int.Parse(x.Key))
+                .OrderBy(x => int.Parse(x.Key.Substring(1)))
                 .Select(x => x.Value.Translation)
                 .ToList();
             return translations;
