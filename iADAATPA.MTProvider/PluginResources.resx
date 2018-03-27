@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="iADAATPA_API" xml:space="preserve">
-    <value>https://private-anon-c698772d47-iadaatpadev.apiary-mock.com/api/</value>
+    <value>https://iadaatpa.eu/api/</value>
   </data>
   <data name="Plugin_Description" xml:space="preserve">
     <value>iADAATPA Translator plugin for SDL Trados Studio</value>
