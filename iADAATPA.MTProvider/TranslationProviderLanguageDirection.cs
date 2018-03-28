@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using iADAATPA.MTProvider.Extensions;
 using Sdl.LanguagePlatform.Core;
 using Sdl.LanguagePlatform.TranslationMemory;
 using Sdl.LanguagePlatform.TranslationMemoryApi;
@@ -55,7 +57,20 @@ namespace iADAATPA.MTProvider
         {
             IEnumerable<Segment> toTranslate = mask != null ? segments.Where((x, i) => mask[i]) : segments;
             List<string> sources = toTranslate.Select(x => x.ToPlain()).ToList(); // TODO: handle tags
-            List<string> translations = _client.Translate(sources, src, trg).Result;
+            List<string> translations;
+            try
+            {
+                translations = _client.Translate(sources, src, trg).Result;
+            }
+            catch (AggregateException e)
+            {
+                var httpException = e.InnerException as SimpleHttpResponseException ?? throw e.InnerException;
+                if (httpException.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    throw new TranslationProviderAuthenticationException("Invalid Consumer API Token", httpException);
+                }
+                throw httpException;
+            }
 
             IEnumerable<SearchResults> nonMaskedResults = segments.Zip(translations,
                 // Converting a translation string to SearchResults is quite involved

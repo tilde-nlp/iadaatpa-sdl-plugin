@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using iADAATPA.MTProvider.Extensions;
 using iADAATPA.MTProvider.Models;
 
 namespace iADAATPA.MTProvider.API
@@ -29,7 +30,7 @@ namespace iADAATPA.MTProvider.API
                     Source = source,
                     Target = target,
                     Segments = segments }).ConfigureAwait(false);
-            res.EnsureSuccessStatusCode();
+            await res.EnsureSuccessStatusCodeAsync();
 
             var respItem = await res.Content.ReadAsAsync<TranslationResponseItem>().ConfigureAwait(false);
             var translations = respItem.Data.Segments.ToList()
