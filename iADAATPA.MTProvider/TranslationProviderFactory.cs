@@ -19,7 +19,7 @@ namespace iADAATPA.MTProvider
         public ITranslationProvider CreateTranslationProvider(Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
         {
             TranslationProviderCredential authCredential = credentialStore.GetCredential(translationProviderUri);
-            string authToken = authCredential.Credential;
+            string authToken = authCredential?.Credential;
             if (string.IsNullOrEmpty(authToken))
             {
                 throw new TranslationProviderAuthenticationException();
