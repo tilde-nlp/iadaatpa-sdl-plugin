@@ -26,7 +26,20 @@ namespace iADAATPA.MTProvider
         public ITranslationProvider[] Browse(IWin32Window owner, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
         {
             var factory = new TranslationProviderFactory();
-            return new ITranslationProvider[] { factory.CreateTranslationProvider(providerUri, null, credentialStore) };
+            ITranslationProvider provider;
+            try
+            {
+                provider = factory.CreateTranslationProvider(providerUri, null, credentialStore);
+            }
+            catch (TranslationProviderAuthenticationException e)
+            {
+                if (GetCredentialsFromUser(owner, providerUri, null, credentialStore))
+                {
+                    return Browse(owner, languagePairs, credentialStore);
+                }
+                return null;
+            }
+            return new ITranslationProvider[] { provider };
         }
 
         public bool Edit(IWin32Window owner, ITranslationProvider translationProvider, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
