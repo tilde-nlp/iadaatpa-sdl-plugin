@@ -49,7 +49,12 @@ namespace iADAATPA.MTProvider
         }
 
         public TranslationProviderDisplayInfo GetDisplayInfo(Uri translationProviderUri, string translationProviderState)
-            => new TranslationProviderDisplayInfo() { Name = PluginResources.Plugin_Name, TooltipText = PluginResources.Plugin_Description }; // TODO: provide icons
+            => new TranslationProviderDisplayInfo() {
+                Name = PluginResources.Plugin_Name,
+                TooltipText = PluginResources.Plugin_Description,
+                TranslationProviderIcon = PluginResources.iadaatpa_logo,
+                SearchResultImage = PluginResources.iadaatpa_logo.ToBitmap()
+            };
 
         public bool SupportsEditing => true;
 

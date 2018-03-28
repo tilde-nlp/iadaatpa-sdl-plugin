@@ -9,7 +9,8 @@
              helpers:DialogCloser.DialogResult="{Binding DialogResult}"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
              Title="{Binding Source={x:Static mt:PluginResources.UI_AuthTitle}}"
-             mc:Ignorable="d" Height="137.877" Width="330.096" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
+             mc:Ignorable="d" Height="137.877" Width="330.096" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+                      Icon="{Binding Source={x:Static mt:PluginResources.iadaatpa_logo}}" >
     <Grid Margin="18 22">
         <StackPanel>
             <TextBlock Margin="0 0 0 10" TextWrapping="Wrap" Text="{Binding Source={x:Static mt:PluginResources.UI_AuthText}}"/>
