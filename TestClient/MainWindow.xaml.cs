@@ -29,19 +29,19 @@ namespace TestClient
     public partial class MainWindow : Window
     {
         ITranslationProviderWinFormsUI _ui = new TranslationProviderWinFormsUI();
-        TranslationProviderCredentialStore _store = new TranslationProviderCredentialStore();
+        MyTranslationProviderCredentialStore _store = new MyTranslationProviderCredentialStore();
         Uri _uri = new TranslationProviderUriBuilder("iadaatpa").Uri;
+        const string saveTo = "./settings.json";
 
         public MainWindow()
         {
             InitializeComponent();
-            if (File.Exists("./settings.xml")){
-                using (XmlReader reader = XmlReader.Create("./settings.xml"))
-                {
-                    _store.ReadXml(reader);
-                }
+            if (File.Exists(saveTo))
+            {
+                _store = MyTranslationProviderCredentialStore.FromFile(saveTo);
             }
-            else {
+            else
+            {
                 _ui.Edit(null, null, null, _store);
                 SaveStore();
             }
@@ -57,10 +57,7 @@ namespace TestClient
 
         private void SaveStore()
         {
-            using (XmlWriter writer = XmlWriter.Create("./settings.xml"))
-            {
-                _store.WriteXml(writer);
-            }
+            MyTranslationProviderCredentialStore.ToFile(saveTo, _store);
         }
 
         private void SetupTranslation()
