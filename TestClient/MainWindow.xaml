@@ -8,7 +8,8 @@
         Title="MainWindow" Height="153.085" Width="525">
     <Grid>
         <StackPanel VerticalAlignment="Center">
-        <Grid>
+        <Button Content="Settings" Width="60" HorizontalAlignment="Right" Margin="0 0 10 0" Click="Button_Click"/>
+        <Grid Margin="0 10 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -16,7 +17,7 @@
             <TextBox Margin="10 0" Grid.Column="0" Text="{Binding Source}" />
             <TextBox Margin="10 0" Grid.Column="1" Text="{Binding Translation}"/>
         </Grid>
-        <Button Content="Translate" Width="60" Command="{Binding TranslateCommand}"/>
+        <Button Content="Translate" Width="60" Margin="0 10 0 0" Command="{Binding TranslateCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
