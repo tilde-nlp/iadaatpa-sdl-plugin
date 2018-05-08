@@ -72,7 +72,7 @@ namespace iADAATPA.MTProvider
                 throw httpException;
             }
 
-            IEnumerable<SearchResults> nonMaskedResults = segments.Zip(translations,
+            IEnumerable<SearchResults> nonMaskedResults = toTranslate.Zip(translations,
                 // Converting a translation string to SearchResults is quite involved
                 (Segment sourceSegment, string translation) => {
                     var targetSegment = translation.ToSegment(sourceSegment);
