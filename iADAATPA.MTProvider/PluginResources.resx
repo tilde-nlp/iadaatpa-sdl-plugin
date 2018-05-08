@@ -142,6 +142,9 @@
   <data name="iadaatpa_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Assets\iadaatpa.logo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UI_LogOut" xml:space="preserve">
+    <value>Log out</value>
+  </data>
   <data name="UI_TokenNotValid" xml:space="preserve">
     <value>The Consumer API Token you have entered is not valid.</value>
   </data>

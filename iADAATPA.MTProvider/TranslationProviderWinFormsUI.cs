@@ -60,8 +60,18 @@ namespace iADAATPA.MTProvider
                 return false;
             }
             string authToken = authViewModel.AuthToken;
-            credentialStore.AddCredential(providerUri, new TranslationProviderCredential(authToken, true));
-            return true;
+            if (authToken != null)
+            {
+                credentialStore.AddCredential(providerUri, new TranslationProviderCredential(authToken, true));
+                return true;
+            }
+            else
+            {
+                // the user has deleted the token using the logout button
+                credentialStore.RemoveCredential(providerUri);
+                // Trados will handle this by disabling the plugin
+                throw new TranslationProviderAuthenticationException();
+            }
         }
 
         public TranslationProviderDisplayInfo GetDisplayInfo(Uri translationProviderUri, string translationProviderState)

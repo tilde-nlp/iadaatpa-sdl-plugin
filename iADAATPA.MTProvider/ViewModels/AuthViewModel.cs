@@ -14,6 +14,7 @@ namespace iADAATPA.MTProvider.ViewModels
     {
         private string _authToken;
         private ICommand _goCommand;
+        private ICommand _logoutCommand;
         private API.IClient _client;
 
         public event EventHandler<string> ShowMessage;
@@ -21,6 +22,11 @@ namespace iADAATPA.MTProvider.ViewModels
         public AuthViewModel(API.IClient client)
         {
             _client = client;
+
+
+            #region Command definitions
+            // All of the commands are defined in the constructor because this way we can
+            // make them a bit less messy. TODO: can this be done better?
 
             _goCommand = new DelegateCommand(() =>
             {
@@ -36,6 +42,15 @@ namespace iADAATPA.MTProvider.ViewModels
                     ShowMessage(this, PluginResources.UI_TokenNotValid);
                 }
             });
+
+            _logoutCommand = new DelegateCommand(() =>
+            {
+                AuthToken = null;
+                DialogResult = true;
+                OnClosingRequest();
+            });
+
+            #endregion
         }
         public string AuthToken {
             get => _authToken;
@@ -50,5 +65,6 @@ namespace iADAATPA.MTProvider.ViewModels
         }
 
         public ICommand GoCommand => _goCommand;
+        public ICommand LogoutCommand => _logoutCommand;
     }
 }

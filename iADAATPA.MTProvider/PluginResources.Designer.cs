@@ -134,6 +134,15 @@ namespace iADAATPA.MTProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log out.
+        /// </summary>
+        public static string UI_LogOut {
+            get {
+                return ResourceManager.GetString("UI_LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Consumer API Token you have entered is not valid..
         /// </summary>
         public static string UI_TokenNotValid {
