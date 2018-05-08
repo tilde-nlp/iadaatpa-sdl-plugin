@@ -50,7 +50,13 @@ namespace TestClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _ui.Edit(null, null, null, _store);
+            try
+            {
+                _ui.Edit(null, null, null, _store);
+            }
+            // Trados studio would disable the plugin but we'll just ignore the exception
+            catch (TranslationProviderAuthenticationException ex) { }
+
             SaveStore();
             SetupTranslation();
         }

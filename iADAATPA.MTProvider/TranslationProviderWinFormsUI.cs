@@ -69,8 +69,9 @@ namespace iADAATPA.MTProvider
             {
                 // the user has deleted the token using the logout button
                 credentialStore.RemoveCredential(providerUri);
-                // Trados will handle this by disabling the plugin
-                throw new TranslationProviderAuthenticationException();
+                // TODO: return something that will make Trados disable the plugin
+                //throw new TranslationProviderAuthenticationException();
+                return true;
             }
         }
 
