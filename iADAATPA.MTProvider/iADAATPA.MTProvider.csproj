@@ -95,6 +95,7 @@
     <Compile Include="Extensions\SegmentExtensions.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
+    <Compile Include="Models\ErrorResponseModels.cs" />
     <Compile Include="Models\TranslationItem.cs" />
     <Compile Include="Models\TranslationRequestItem.cs" />
     <Compile Include="Models\TranslationResponseItem.cs" />

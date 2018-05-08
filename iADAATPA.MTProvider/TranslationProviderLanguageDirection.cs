@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using iADAATPA.MTProvider.Extensions;
+using iADAATPA.MTProvider.Models;
 using Sdl.LanguagePlatform.Core;
 using Sdl.LanguagePlatform.TranslationMemory;
 using Sdl.LanguagePlatform.TranslationMemoryApi;
@@ -64,12 +65,12 @@ namespace iADAATPA.MTProvider
             }
             catch (AggregateException e)
             {
-                var httpException = e.InnerException as SimpleHttpResponseException ?? throw e.InnerException;
-                if (httpException.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                var apiException = e.InnerException as SimpleHttpResponseException<GenericResponse> ?? throw e.InnerException;
+                if (apiException.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    throw new TranslationProviderAuthenticationException("Invalid Consumer API Token", httpException);
+                    throw new TranslationProviderAuthenticationException("Invalid Consumer API Token", apiException);
                 }
-                throw httpException;
+                throw new Exception($"{apiException.Content.Error.Message} ({apiException.Content.Error.Code})");
             }
 
             IEnumerable<SearchResults> nonMaskedResults = toTranslate.Zip(translations,

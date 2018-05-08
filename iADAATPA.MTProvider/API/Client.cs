@@ -35,7 +35,7 @@ namespace iADAATPA.MTProvider.API
                     Source = source,
                     Target = target,
                     Segments = segments }).ConfigureAwait(false);
-            await res.EnsureSuccessStatusCodeAsync();
+            await res.EnsureSuccessStatusCodeAsync<GenericResponse>();
 
             var respItem = await res.Content.ReadAsAsync<TranslationResponseItem>().ConfigureAwait(false);
             var translations = respItem.Data.Segments.ToList()
@@ -68,7 +68,7 @@ namespace iADAATPA.MTProvider.API
             {
                 respMessage = await res.Content.ReadAsStringAsync();
             }
-            throw new SimpleHttpResponseException(res.StatusCode, res.ReasonPhrase, respMessage);
+            throw new SimpleHttpResponseException<string>(res.StatusCode, res.ReasonPhrase, respMessage);
         }
     }
 }
