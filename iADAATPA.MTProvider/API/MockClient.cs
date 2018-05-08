@@ -10,5 +10,8 @@ namespace iADAATPA.MTProvider.API
     {
         public async Task<List<string>> Translate(List<string> sources, string source, string target)
             => sources.Select(x => (new Random().NextDouble() > 0.5 ? "YOLO " : "LOL ") + x.ToUpperInvariant()).ToList();
+
+        public async Task<bool> ValidateToken(string authToken)
+            => await Task.FromResult(true);
     }
 }

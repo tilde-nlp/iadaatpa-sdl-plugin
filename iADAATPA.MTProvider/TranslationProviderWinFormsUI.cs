@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
+using iADAATPA.MTProvider.API;
 using iADAATPA.MTProvider.ViewModels;
 using iADAATPA.MTProvider.Views;
 using Sdl.LanguagePlatform.Core;
@@ -19,6 +20,8 @@ namespace iADAATPA.MTProvider
         Description = "User interface for the iADAATPA Translator plugin")]
     public class TranslationProviderWinFormsUI : ITranslationProviderWinFormsUI
     {
+        private IClient _client = new API.Client(PluginResources.iADAATPA_API);
+
         private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
 
         #region ITranslationProviderWinFormsUI Members
@@ -47,7 +50,7 @@ namespace iADAATPA.MTProvider
 
         public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
         {
-            var authViewModel = new AuthViewModel();
+            var authViewModel = new AuthViewModel(_client);
             string existingToken = credentialStore.GetCredential(translationProviderUri)?.Credential;
             authViewModel.AuthToken = existingToken;
             var authView = new AuthWindow(authViewModel);

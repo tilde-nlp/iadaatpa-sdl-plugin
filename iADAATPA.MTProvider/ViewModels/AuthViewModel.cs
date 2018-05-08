@@ -14,12 +14,21 @@ namespace iADAATPA.MTProvider.ViewModels
     {
         private string _authToken;
         private ICommand _goCommand;
-        public AuthViewModel()
+        private API.IClient _client;
+
+        public AuthViewModel(API.IClient client)
         {
+            _client = client;
+
             _goCommand = new DelegateCommand(() =>
             {
-                DialogResult = true;
-                OnClosingRequest();
+                bool isValidToken = _client.ValidateToken(AuthToken).Result;
+                if (isValidToken)
+                {
+                    DialogResult = true;
+                    OnClosingRequest();
+                    return;
+                }
             });
         }
         public string AuthToken {
