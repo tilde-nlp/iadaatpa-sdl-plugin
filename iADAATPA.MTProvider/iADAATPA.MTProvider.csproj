@@ -92,6 +92,7 @@
     <Compile Include="API\MockClient.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtensions.cs" />
+    <Compile Include="Extensions\SegmentExtensions.cs" />
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
     <Compile Include="Models\TranslationItem.cs" />
