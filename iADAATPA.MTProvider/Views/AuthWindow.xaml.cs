@@ -21,9 +21,13 @@ namespace iADAATPA.MTProvider.Views
     /// </summary>
     public partial class AuthWindow : ClosableWindow
     {
-        public AuthWindow(ClosableViewModel vm) : base(vm)
+        public AuthWindow(AuthViewModel vm) : base(vm)
         {
             InitializeComponent();
+            vm.ShowMessage += Vm_ShowMessage;
         }
+
+        private void Vm_ShowMessage(object sender, string e)
+            => MessageBox.Show(e);
     }
 }

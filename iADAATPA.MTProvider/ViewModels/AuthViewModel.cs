@@ -16,6 +16,8 @@ namespace iADAATPA.MTProvider.ViewModels
         private ICommand _goCommand;
         private API.IClient _client;
 
+        public event EventHandler<string> ShowMessage;
+
         public AuthViewModel(API.IClient client)
         {
             _client = client;
@@ -28,6 +30,10 @@ namespace iADAATPA.MTProvider.ViewModels
                     DialogResult = true;
                     OnClosingRequest();
                     return;
+                }
+                else
+                {
+                    ShowMessage(this, PluginResources.UI_TokenNotValid);
                 }
             });
         }

@@ -132,5 +132,14 @@ namespace iADAATPA.MTProvider {
                 return ResourceManager.GetString("UI_Go", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Consumer API Token you have entered is not valid..
+        /// </summary>
+        public static string UI_TokenNotValid {
+            get {
+                return ResourceManager.GetString("UI_TokenNotValid", resourceCulture);
+            }
+        }
     }
 }
