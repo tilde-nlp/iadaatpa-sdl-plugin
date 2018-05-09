@@ -24,23 +24,17 @@ namespace iADAATPA.MTProvider.API
                 throw new InvalidOperationException("authToken is null");
             }
 
-            Dictionary<string, string> segments =
-                sources
-                .Select((value, index) => new { value, index })
-                .ToDictionary(x => "s" + x.index.ToString(), x => x.value);
-
             var res = await this.PostAsJsonAsync("translate",
                 new TranslationRequestItem {
                     Token = _authToken,
                     Source = source,
                     Target = target,
-                    Segments = segments }).ConfigureAwait(false);
+                    Segments = sources }).ConfigureAwait(false);
             await res.EnsureSuccessStatusCodeAsync<GenericResponse>();
 
             var respItem = await res.Content.ReadAsAsync<TranslationResponseItem>().ConfigureAwait(false);
-            var translations = respItem.Data.Segments.ToList()
-                .OrderBy(x => int.Parse(x.Key.Substring(1)))
-                .Select(x => x.Value.Translation)
+            var translations = respItem.Data.Segments
+                .Select(x => x.Translation)
                 .ToList();
             return translations;
         }

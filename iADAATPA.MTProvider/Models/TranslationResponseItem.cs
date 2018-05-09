@@ -22,6 +22,6 @@ namespace iADAATPA.MTProvider.Models
     public class SegmentContainer
     {
         [JsonProperty("segments")]
-        public Dictionary<string, TranslationItem> Segments { get; set; }
+        public List<TranslationItem> Segments { get; set; }
     }
 }

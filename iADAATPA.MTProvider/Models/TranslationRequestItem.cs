@@ -22,6 +22,6 @@ namespace iADAATPA.MTProvider.Models
         public string Domain { get; set; }
 
         [JsonProperty("segments")]
-        public Dictionary<string, string> Segments { get; set; }
+        public List<string> Segments { get; set; }
     }
 }
