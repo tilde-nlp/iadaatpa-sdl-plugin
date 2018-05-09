@@ -69,9 +69,11 @@ namespace iADAATPA.MTProvider
             {
                 // the user has deleted the token using the logout button
                 credentialStore.RemoveCredential(providerUri);
-                // TODO: return something that will make Trados disable the plugin
-                //throw new TranslationProviderAuthenticationException();
-                return true;
+
+                // TODO: return something that will make Trados disable the plugin. Currently I don't think it's possible, though.
+                // Returning false indicates that the settings haven't changed which isn't true but if true is returned the user
+                // gets endless prompts from Trados to input credentials. This seems like a bug, though, so hopefully this will change.
+                return false;
             }
         }
 
