@@ -24,6 +24,20 @@ namespace iADAATPA.MTProvider
 
         private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
 
+        private static Uri generateProviderUri(ITranslationProviderCredentialStore store)
+        {
+            Uri makeUri(int uriNum)
+                => new TranslationProviderUriBuilder(uriNum.ToString(), PluginResources.Plugin_UriSchema).Uri;
+
+            int i = 0;
+            // find the first unused uri
+            while (store.GetCredential(makeUri(i)) != null)
+            {
+                i++;
+            }
+            return makeUri(i);
+        }
+
         #region ITranslationProviderWinFormsUI Members
 
         public ITranslationProvider[] Browse(IWin32Window owner, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
