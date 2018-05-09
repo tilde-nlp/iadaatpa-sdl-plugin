@@ -44,24 +44,15 @@ namespace iADAATPA.MTProvider.API
             // describesuppliers is a low-cost method we use instead of a dedicated one
             var res = await this.GetAsync("describesuppliers/" + Uri.EscapeDataString(authToken),
                 HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
-            string respMessage = null;
             if (res.IsSuccessStatusCode)
             {
                 return true;
             }
-            //else if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) // Currently this doesn't work
-            else if (res.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            else if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                respMessage = await res.Content.ReadAsStringAsync();
-                if (respMessage.Contains("Invalid <token>"))
-                {
-                    return false;
-                }
+                return false;
             }
-            else
-            {
-                respMessage = await res.Content.ReadAsStringAsync();
-            }
+            string respMessage = await res.Content.ReadAsStringAsync();
             throw new SimpleHttpResponseException<string>(res.StatusCode, res.ReasonPhrase, respMessage);
         }
     }
