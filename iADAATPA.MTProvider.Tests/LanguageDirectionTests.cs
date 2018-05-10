@@ -15,10 +15,16 @@ namespace iADAATPA.MTProvider.Tests
     public class LanguageDirectionTests
     {
         [Theory]
+        [InlineData(new []{ "source1"}, new []{ true }, new []{ "translation1"}, new []{ "translation1"})]
         [InlineData(new []{ "source1", "source2" }, new []{ true, true}, new []{ "translation1", "translation2"}, new []{ "translation1", "translation2"})]
         [InlineData(new []{ "source1", "source2" }, new []{ false, true}, new []{"translation2"}, new []{ null, "translation2"})]
         [InlineData(new []{ "source1", "source2", "source3" }, new []{ true, true, false}, new []{"translation1", "translation2"}, new []{ "translation1", "translation2", null})]
         [InlineData(new []{ "source1", "source2", "source3" }, new []{ false, false, false}, new string[]{}, new string[]{ null, null, null})]
+        [InlineData(
+            new []{ "source1", "source2", "source3", "source4", "source5" },
+            new []{ false, true, false, false, true},
+            new []{"translation2", "translation5"},
+            new []{ null, "translation2", null, null, "translation5"})]
         public void Translate_Masked(string[] sources, bool[] masks, string[] translations, string[] expectedTargets)
         {
             var toTranslate = sources
