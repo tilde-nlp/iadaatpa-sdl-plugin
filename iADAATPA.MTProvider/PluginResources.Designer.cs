@@ -134,7 +134,7 @@ namespace iADAATPA.MTProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log out.
+        ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string UI_LogOut {
             get {

@@ -31,17 +31,7 @@
     </Window.Resources>
     <Grid Margin="18 22">
         <StackPanel>
-            <Grid Margin="0 0 0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="60"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding Source={x:Static mt:PluginResources.UI_AuthText}}"/>
-                <Button Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource LinkButton}"
-                        Content="{Binding Source={x:Static mt:PluginResources.UI_LogOut}}" 
-                        Command="{Binding LogoutCommand}"
-                        />
-            </Grid>
+            <TextBlock Grid.Column="0" Margin="0 0 0 10" TextWrapping="Wrap" Text="{Binding Source={x:Static mt:PluginResources.UI_AuthText}}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -50,6 +40,10 @@
                 <TextBox Margin="0 0 10 0" Grid.Column="0" Text="{Binding AuthToken,Mode=TwoWay}"/>
                 <Button Grid.Column="1" Content="{Binding Source={x:Static mt:PluginResources.UI_Go}}" Command="{Binding GoCommand}"/>
             </Grid>
+            <Button Grid.Column="1" Style="{StaticResource LinkButton}"
+                    Content="{Binding Source={x:Static mt:PluginResources.UI_LogOut}}"
+                    Command="{Binding LogoutCommand}"
+                    />
         </StackPanel>
     </Grid>
 </local:ClosableWindow>
