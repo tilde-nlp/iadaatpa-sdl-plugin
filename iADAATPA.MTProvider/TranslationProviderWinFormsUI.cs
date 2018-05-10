@@ -22,12 +22,12 @@ namespace iADAATPA.MTProvider
     {
         private IClient _client = new API.Client(PluginResources.iADAATPA_API);
 
-        private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
+        //private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
 
         private static Uri generateProviderUri(ITranslationProviderCredentialStore store)
         {
             Uri makeUri(int uriNum)
-                => new TranslationProviderUriBuilder(uriNum.ToString(), PluginResources.Plugin_UriSchema).Uri;
+                => new Uri($"{PluginResources.Plugin_UriSchema}:///proj-{uriNum.ToString()}");
 
             int i = 0;
             // find the first unused uri
@@ -42,25 +42,19 @@ namespace iADAATPA.MTProvider
 
         public ITranslationProvider[] Browse(IWin32Window owner, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
         {
-            var factory = new TranslationProviderFactory();
-            ITranslationProvider provider;
-            try
+            var newUri = generateProviderUri(credentialStore);
+
+            if (!GetCredentialsFromUser(owner, newUri, null, credentialStore))
             {
-                provider = factory.CreateTranslationProvider(providerUri, null, credentialStore);
-            }
-            catch (TranslationProviderAuthenticationException e)
-            {
-                if (GetCredentialsFromUser(owner, providerUri, null, credentialStore))
-                {
-                    return Browse(owner, languagePairs, credentialStore);
-                }
                 return null;
             }
+            var factory = new TranslationProviderFactory();
+            ITranslationProvider provider = factory.CreateTranslationProvider(newUri, null, credentialStore);
             return new ITranslationProvider[] { provider };
         }
 
         public bool Edit(IWin32Window owner, ITranslationProvider translationProvider, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
-            => GetCredentialsFromUser(owner, providerUri, null, credentialStore);
+            => GetCredentialsFromUser(owner, translationProvider.Uri, null, credentialStore);
 
         public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
         {
@@ -76,13 +70,13 @@ namespace iADAATPA.MTProvider
             string authToken = authViewModel.AuthToken;
             if (authToken != null)
             {
-                credentialStore.AddCredential(providerUri, new TranslationProviderCredential(authToken, true));
+                credentialStore.AddCredential(translationProviderUri, new TranslationProviderCredential(authToken, true));
                 return true;
             }
             else
             {
                 // the user has deleted the token using the logout button
-                credentialStore.RemoveCredential(providerUri);
+                credentialStore.RemoveCredential(translationProviderUri);
 
                 // TODO: return something that will make Trados disable the plugin. Currently I don't think it's possible, though.
                 // Returning false indicates that the settings haven't changed which isn't true but if true is returned the user
