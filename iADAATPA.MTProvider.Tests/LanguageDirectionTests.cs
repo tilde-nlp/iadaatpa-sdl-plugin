@@ -27,6 +27,9 @@ namespace iADAATPA.MTProvider.Tests
             new[] { null, "translation2", null, null, "translation5" })]
         public void Translate_Masked(string[] sources, bool[] masks, string[] translations, string[] expectedTargets)
         {
+            // Ensure that the input data are correct
+            Assert.True(sources.Length == masks.Length && sources.Length == expectedTargets.Length);
+
             var toTranslate = sources
                 .Zip(masks, (source, mask) => new { source, mask })
                 .Where(x => x.mask)
@@ -34,6 +37,10 @@ namespace iADAATPA.MTProvider.Tests
             var translationList = translations.ToList();
             string srcLang = "en";
             string trgLang = "lv";
+
+            // Another check for input data
+            Assert.True(toTranslate.Count == translationList.Count);
+
             var mock = new Mocks.MockClient().MockTranslate(toTranslate, translationList, srcLang, trgLang);
             IClient client = mock.Object;
 
