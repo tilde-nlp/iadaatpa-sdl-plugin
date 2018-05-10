@@ -15,8 +15,8 @@ namespace iADAATPA.MTProvider
     {
         private LanguagePair _languageDirection;
         private API.IClient _client;
-        private string src => _languageDirection.SourceCultureName;
-        private string trg => _languageDirection.TargetCultureName;
+        private string src => _languageDirection.SourceCulture.TwoLetterISOLanguageName;
+        private string trg => _languageDirection.TargetCulture.TwoLetterISOLanguageName;
 
         public TranslationProviderLanguageDirection(LanguagePair languageDirection, API.IClient client, ITranslationProvider parent)
         {
