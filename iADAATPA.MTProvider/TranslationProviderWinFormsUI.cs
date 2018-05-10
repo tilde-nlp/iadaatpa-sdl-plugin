@@ -22,29 +22,35 @@ namespace iADAATPA.MTProvider
     {
         private IClient _client = new API.Client(PluginResources.iADAATPA_API);
 
-        //private static Uri providerUri => new TranslationProviderUriBuilder(PluginResources.Plugin_UriSchema).Uri;
+        private static Uri formatUri(int uriNum)
+            => new Uri($"{PluginResources.Plugin_UriSchema}:///proj-{uriNum.ToString()}");
 
-        private static Uri generateProviderUri(ITranslationProviderCredentialStore store)
+        private static Tuple<Uri, int> generateProviderUri(ITranslationProviderCredentialStore store)
         {
-            Uri makeUri(int uriNum)
-                => new Uri($"{PluginResources.Plugin_UriSchema}:///proj-{uriNum.ToString()}");
-
             int i = 0;
             // find the first unused uri
-            while (store.GetCredential(makeUri(i)) != null)
+            while (store.GetCredential(formatUri(i)) != null)
             {
                 i++;
             }
-            return makeUri(i);
+            return Tuple.Create(formatUri(i), i);
         }
 
         #region ITranslationProviderWinFormsUI Members
 
         public ITranslationProvider[] Browse(IWin32Window owner, LanguagePair[] languagePairs, ITranslationProviderCredentialStore credentialStore)
         {
-            var newUri = generateProviderUri(credentialStore);
+            // We use a new uri for each new project to which the plugin is added. This is ok by itself
+            // but, when the plugin is removed, I don't see a way to remove the respective credential.
+            // So credentials just keep on piling up over time and the only way they get removed is via
+            // the logout button. An alternative is to revert to a single API key for all projects
+            // (the implementation can be found in some previous commit).
+            var unused = generateProviderUri(credentialStore);
+            Uri newUri = unused.Item1;
+            int uriNum = unused.Item2;
 
-            if (!GetCredentialsFromUser(owner, newUri, null, credentialStore))
+            string prevAuthToken = credentialStore.GetCredential(formatUri(uriNum - 1))?.Credential;
+            if (!GetCredentialsFromUser(owner, newUri, null, credentialStore, prevAuthToken))
             {
                 return null;
             }
@@ -57,9 +63,12 @@ namespace iADAATPA.MTProvider
             => GetCredentialsFromUser(owner, translationProvider.Uri, null, credentialStore);
 
         public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore)
+            => GetCredentialsFromUser(owner, translationProviderUri, translationProviderState, credentialStore, null);
+
+        public bool GetCredentialsFromUser(IWin32Window owner, Uri translationProviderUri, string translationProviderState, ITranslationProviderCredentialStore credentialStore, string initialAuthToken)
         {
             var authViewModel = new AuthViewModel(_client);
-            string existingToken = credentialStore.GetCredential(translationProviderUri)?.Credential;
+            string existingToken = credentialStore.GetCredential(translationProviderUri)?.Credential ?? initialAuthToken;
             authViewModel.AuthToken = existingToken;
             var authView = new AuthWindow(authViewModel);
             bool success = authView.ShowDialog() == true;
