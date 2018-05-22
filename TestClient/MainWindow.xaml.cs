@@ -41,25 +41,28 @@ namespace TestClient
             {
                 _store = MyTranslationProviderCredentialStore.FromFile(saveTo);
             }
-            else
+            try
             {
-                _ui.Browse(null, null, _store);
-                SaveStore();
+                SetupTranslation();
             }
-            SetupTranslation();
+            catch (TranslationProviderAuthenticationException ex) {
+                var dummyProvider = new TranslationProvider(_uri, null);
+                _ui.Edit(null, dummyProvider, null, _store);  // would have used _ui.Browse() but it generates it's own uri
+                SaveStore();
+                SetupTranslation();  // if this throws the second time, so be it
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            _ui.Edit(null, _provider, null, _store);
+            SaveStore();
+
             try
             {
-                _ui.Edit(null, _provider, null, _store);
+                SetupTranslation();
             }
-            // Trados studio would disable the plugin but we'll just ignore the exception
             catch (TranslationProviderAuthenticationException ex) { }
-
-            SaveStore();
-            SetupTranslation();
         }
 
         private void SaveStore()
