@@ -32,6 +32,7 @@ namespace TestClient
         MyTranslationProviderCredentialStore _store = new MyTranslationProviderCredentialStore();
         Uri _uri = new TranslationProviderUriBuilder("iadaatpa").Uri;
         const string saveTo = "./settings.json";
+        ITranslationProvider _provider;
 
         public MainWindow()
         {
@@ -42,7 +43,7 @@ namespace TestClient
             }
             else
             {
-                _ui.Edit(null, null, null, _store);
+                _ui.Browse(null, null, _store);
                 SaveStore();
             }
             SetupTranslation();
@@ -52,7 +53,7 @@ namespace TestClient
         {
             try
             {
-                _ui.Edit(null, null, null, _store);
+                _ui.Edit(null, _provider, null, _store);
             }
             // Trados studio would disable the plugin but we'll just ignore the exception
             catch (TranslationProviderAuthenticationException ex) { }
@@ -69,8 +70,8 @@ namespace TestClient
         private void SetupTranslation()
         {
             var factory = new TranslationProviderFactory();
-            var provider = factory.CreateTranslationProvider(_uri, null, _store);
-            var vm = new MainViewModel(provider);
+            _provider = factory.CreateTranslationProvider(_uri, null, _store);
+            var vm = new MainViewModel(_provider);
             DataContext = vm;
         }
     }
