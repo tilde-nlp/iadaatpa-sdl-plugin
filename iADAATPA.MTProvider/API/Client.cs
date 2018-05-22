@@ -41,6 +41,10 @@ namespace iADAATPA.MTProvider.API
 
         public async Task<bool> ValidateToken(string authToken)
         {
+            if (String.IsNullOrEmpty(authToken))
+            {
+                return false;
+            }
             // describesuppliers is a low-cost method we use instead of a dedicated one
             var res = await this.GetAsync("describesuppliers/" + Uri.EscapeDataString(authToken),
                 HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
