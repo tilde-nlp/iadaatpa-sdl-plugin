@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PluginPackage xmlns="http://www.sdl.com/Plugins/PluginPackage/1.0">
   <PlugInName>iADAATPA.MTProvider</PlugInName>
-  <Version>2.0</Version>
+  <Version>1.0.0</Version>
   <Description>iADAATPA Translator plugin for SDL Trados Studio</Description>
   <Author></Author>
   <RequiredProduct name="SDLTradosStudio" minversion="12.0" maxversion="15.0"/>
