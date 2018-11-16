@@ -10,7 +10,7 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
              Title="{Binding Source={x:Static mt:PluginResources.UI_AuthTitle}}"
              mc:Ignorable="d" Height="135.877" Width="330.096" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
-                      Icon="{Binding Source={x:Static mt:PluginResources.iadaatpa_logo}}" >
+             Icon="/iADAATPA.MTProvider;component/Assets/iadaatpa.logo.ico"  >
     <Window.Resources>
         <Style x:Key="LinkButton" TargetType="Button">
             <Setter Property="Template">

@@ -130,7 +130,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PluginResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Assets\iadaatpa.logo.ico" />
+    <Resource Include="Assets\iadaatpa.logo.ico" />
     <Content Include="pluginpackage.manifest.xml" />
   </ItemGroup>
   <ItemGroup>
